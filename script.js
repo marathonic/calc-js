@@ -1,13 +1,29 @@
 const screen = document.querySelector('.calc-screen');
 const numbers = document.querySelector('.numbers');
+const noClick = document.querySelector('.no-click');
 
 const calculatorBody = document.querySelector('.calculator-body');
 
 calculatorBody.addEventListener('click', function(e){
 
+    // let target = e.target;
     let x = 0;
     let y = 0;
     let total = 0;
+
+    //DO NOT OUTPUT EVERYTHING TO SCREEN WHEN CALCULATOR BODY IS CLICKED:
+    if(e.target.classList.contains('no-click')){
+        //figure out HOW TO DO NOTHING;
+        return false;
+    }
+
+    //CODE TO RUN WHEN A NUMBER IS PRESSED:
+
+    if(e.target.classList.contains('num')){
+        console.log('NUMBER PRESSED')
+    }    
+
+    //CODE TO RUN WHEN AN OPERATOR IS PRESSED:
 
     if(e.target.nodeName === 'BUTTON'){
         
@@ -15,17 +31,20 @@ calculatorBody.addEventListener('click', function(e){
         if(e.target.textContent === '+' || e.target.textContent === '-') {
             
             let operator = e.target.textContent;
-            x !== 0 ? y = screen.textContent : x = screen.textContent;
+            x === 0 ? x = Number(screen.textContent) : y = Number(screen.textContent);
 
             console.log(`x = ${x} and y = ${y}`);
 
             function operate(num1,op, num2){
                 op = operator;
-                num1 = x;
-                num2 = y;
+                num1 = Number(x);
+                num2 = Number(y);
                 if(num1 !== 0 || num2 !== 0){
                     // switch(op) case '+' , write switch statement with different cases for each operator.
-                    total = Number(num1) + Number(num2);
+                    
+
+
+                    total = num1 + num2;
                     console.log(total);
                 }
             operate();            
@@ -52,6 +71,8 @@ calculatorBody.addEventListener('click', function(e){
             // return false;
         };
              
+        // only pass to screen the numbers, do not pass the operators to the screen.
+
         screen.innerHTML += e.target.textContent;
 
         // if(e.target.textContent === '+') {
