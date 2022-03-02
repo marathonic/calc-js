@@ -6,83 +6,152 @@ const calculatorBody = document.querySelector('.calculator-body');
 
 calculatorBody.addEventListener('click', function(e){
 
-    // let target = e.target;
     let x = 0;
     let y = 0;
     let total = 0;
+    let operator = '';
+    let arrX = [];
+    let arrY = [];
+    let xLoaded = 0;
+    let yLoaded = 0;
 
-    //DO NOT OUTPUT EVERYTHING TO SCREEN WHEN CALCULATOR BODY IS CLICKED:
+        // xLoaded will always have a value of 1 after the first time we press any one of all the operators,
+        // Because x will always contain the carryover total amount after that,
+        // After each ooperation, we'll store the result in arrX.    
+
+    //Fix outputting items to screen when div is clicked:
     if(e.target.classList.contains('no-click')){
-        //figure out HOW TO DO NOTHING;
         return false;
     }
 
     //CODE TO RUN WHEN A NUMBER IS PRESSED:
 
     if(e.target.classList.contains('num')){
-        console.log('NUMBER PRESSED')
+        screen.textContent += e.target.textContent;
     }    
 
     //CODE TO RUN WHEN AN OPERATOR IS PRESSED:
+    if(e.target.classList.contains('op')){
+        operator = e.target.textContent;
 
-    if(e.target.nodeName === 'BUTTON'){
+        if(arrX.length === 0) {
+            arrX.push(screen.textContent);
+            screen.textContent = '';
+            xLoaded = 1;
+        }
+
+
+        arrY.push(screen.textContent);
+        screen.textContent = '';
+
+        // xLoaded === 0 ? arrX.push(screen.textContent) : arrY.push(screen.textContent);
+        // xLoaded = 1;
+        console.log(`Array X is ${arrX} Array Y is ${arrY}`);
+
+
+        console.log(`operator pressed: ${operator}`)
+        function operate(op,num1,num2){
+            yLoaded = 0;
+            op = operator;
+            num1 = arrX[0];
+            num2 = arrY[0];
+            console.log(`num1 is ${num1} operator is ${op} and num2 is ${num2}`)
+
+            switch (op) {
+                case '+':
+                    add(num1,num2);
+                    break;
+
+                case '-':
+                    add(num1,num2);
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+        operate();
+
+     }
+
+    // Defining operations:
+    //If not working, replace (x,y) parameters with (num1,num2); 
+    function add(x,y){
+        total = x + y;
+        arrX.length = 0;
+        arrX.push(total);
+        return x + y;
+    };
+
+    function subtract(x,y){
+        total = x - y;
+        arrX[0] = total;
+        return x - y;
+    };
+
+    function multiply(x,y){
+        total = x * y;
+        arrX[0] = total;
+        return x * y;
+    }
+
+    function divide(x,y){
+        total = x / y;
+        arrX[0] = total;
+        return x / y;
+    }
+
+
+    }
+);
+
+
+
+
+
+
+
+        //FIRST, operate(), using whichever operator was first pressed. THAT is the current op parameter inside operate: <op,num1,num2>;
+        //SECOND, operate = whichever operator was JUST clicked. If that's minus <->, 
+        //So far we have: Example: 5 + 2 - 1 = (5+2)<----<executed when clicking the MINUS in - 1;
+
+    // }
         
 
-        if(e.target.textContent === '+' || e.target.textContent === '-') {
             
-            let operator = e.target.textContent;
-            x === 0 ? x = Number(screen.textContent) : y = Number(screen.textContent);
+    //         let operator = e.target.textContent;
+    //         x === 0 ? x = Number(screen.textContent) : y = Number(screen.textContent);
 
-            console.log(`x = ${x} and y = ${y}`);
+    //         console.log(`x = ${x} and y = ${y}`);
 
-            function operate(num1,op, num2){
-                op = operator;
-                num1 = Number(x);
-                num2 = Number(y);
-                if(num1 !== 0 || num2 !== 0){
-                    // switch(op) case '+' , write switch statement with different cases for each operator.
+    //         function operate(num1,op, num2){
+    //             op = operator;
+    //             num1 = Number(x);
+    //             num2 = Number(y);
+    //             if(num1 !== 0 || num2 !== 0){
+    //                 // switch(op) case '+' , write switch statement with different cases for each operator.
                     
 
 
-                    total = num1 + num2;
-                    console.log(total);
-                }
-            operate();            
+    //                 total = num1 + num2;
+    //                 console.log(total);
+    //             }
+    //         operate();            
 
                 // console.log(total);
 
                 
-            }
-        }
-
-            // if(x !== 0){
-
-            //     y = screen.textContent;
             // }
-
-            // x = screen.textContent;
-
-            // console.log(`x = ${x}, y = ${y}. Result = ${result});`
-            
-
 
             // when pressing an operator ('+', '-', etc...), check if the string(or array) contains an operator.
             // If the string 
             // return false;
-        };
              
         // only pass to screen the numbers, do not pass the operators to the screen.
 
-        screen.innerHTML += e.target.textContent;
+    //     screen.innerHTML += e.target.textContent;
 
-        // if(e.target.textContent === '+') {
-        // }
-    })
-
-// })
-
-
-
+    // })
 
 
             // remove last character when an operator is pressed, so it doensn't show up. LIke so: 
